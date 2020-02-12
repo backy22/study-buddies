@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'; 
+import axios from 'axios';
+import { API_URL } from "../config";
 
 const User = props => (
   <tr>
@@ -20,7 +21,7 @@ export default class UsersList extends Component {
   }
 
   componentDidMount(){
-    axios.get('http://localhost:5000/users/')
+    axios.get(API_URL+"/users/")
       .then(response => {
         this.setState({ users: response.data })
       })
@@ -30,7 +31,7 @@ export default class UsersList extends Component {
   }
 
   deleteUser(id) {
-    axios.delete('http://localhost:5000/users/'+id)
+    axios.delete(API_URL+"/users/"+id)
       .then(response => { console.log(response.data)});
       
     this.setState({

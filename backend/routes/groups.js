@@ -30,7 +30,6 @@ router.route('/add').post((req, res) => {
     user_ids
   });
 
-
   newGroup.save()
     .then(() => res.json('Group added!'))
     .catch(err => res.status(400).json('Error: ' + err));

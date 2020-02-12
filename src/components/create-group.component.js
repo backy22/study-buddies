@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as Datetime from 'react-datetime';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { API_URL } from "../config";
 
 class CreateGroup extends Component {
   constructor(props){
@@ -87,13 +88,10 @@ class CreateGroup extends Component {
       organizer_id: user.id
     }
 
-    console.log(group);
-
-    axios.post('http://localhost:5000/groups/add', group)
+    axios.post(API_URL+"/groups/add", group)
       .then(res => console.log(res.data));
 
     window.location = '/';
-
 
   }
 

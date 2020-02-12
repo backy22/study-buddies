@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { API_URL } from "../config";
 
 const User = props => (
   <div><Link to={"/users/"+props.user._id}>{props.user.name}</Link></div>
@@ -31,7 +32,7 @@ class ShowGroup extends Component {
   }
 
   componentDidMount(){
-    axios.get('http://localhost:5000/groups/'+this.props.match.params.id)
+    axios.get(API_URL+"/groups/"+this.props.match.params.id)
       .then(response => {
         this.setState({
           title: response.data.title,
@@ -75,13 +76,13 @@ class ShowGroup extends Component {
       user_ids: new_user_ids
     }
 
-    axios.post('http://localhost:5000/groups/update/'+this.props.match.params.id, group)
+    axios.post(API_URL+"/groups/update/"+this.props.match.params.id, group)
       .then(res => console.log(res.data));
 
   }
 
   userList() {
-    axios.get('http://localhost:5000/users/')
+    axios.get(API_URL+"/users/")
       .then(response => {
         if (response.data.length > 0){
           this.setState({

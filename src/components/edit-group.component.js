@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'; 
 import * as Datetime from 'react-datetime';
+import { API_URL } from "../config";
 
 export default class EditGroups extends Component {
   constructor(props){
@@ -30,7 +31,7 @@ export default class EditGroups extends Component {
 
 
   componentDidMount(){
-    axios.get('http://localhost:5000/groups/'+this.props.match.params.id)
+    axios.get(API_URL+"/groups/"+this.props.match.params.id)
       .then(response => {
         this.setState({
           title: response.data.title,
@@ -39,14 +40,18 @@ export default class EditGroups extends Component {
           start_at: new Date(response.data.start_at),
           end_at: new Date(response.data.end_at),
           people: response.data.people,
-          is_private: response.data.is_private
+          is_private: response.data.is_private,
+          organizer_id: response.data.organizer_id,
+          user_ids: response.data.user_ids
         })   
       })
       .catch(function (error) {
         console.log(error);
       })
 
-    axios.get('http://localhost:5000/users/')
+    console.log(this.state)
+
+    axios.get(API_URL+"/users/")
       .then(response => {
         if (response.data.length > 0){
           this.setState({
@@ -115,10 +120,10 @@ export default class EditGroups extends Component {
 
     console.log(group);
 
-    axios.post('http://localhost:5000/groups/update/'+this.props.match.params.id, group)
+    axios.post(API_URL+"/groups/update/"+this.props.match.params.id, group)
       .then(res => console.log(res.data));
 
-    //window.location = '/';
+    window.location = '/';
 
   }
 
@@ -139,11 +144,13 @@ export default class EditGroups extends Component {
         <div className="form-group">
           <label>DateTime: </label>
           <div>
-            <Datetime 
+            <Datetime
+              value={this.state.start_at}
               dateTime={this.state.start_at}
               onChange={this.onChangeStartAt}
             /> ~
-            <Datetime 
+            <Datetime
+              value={this.state.end_at}
               dateTime={this.state.end_at}
               onChange={this.onChangeEndAt}
             />

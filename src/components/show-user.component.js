@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { API_URL } from "../config";
 
 export default class ShowUser extends Component {
   constructor(props){
@@ -18,7 +19,7 @@ export default class ShowUser extends Component {
   }
 
   componentDidMount(){
-    axios.get('http://localhost:5000/users/'+this.props.match.params.id)
+    axios.get(API_URL+"/users/"+this.props.match.params.id)
       .then(response => {
         this.setState({
           name: response.data.name,

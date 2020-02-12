@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
+import { API_URL } from "../config";
 
 class EditUser extends Component {
   constructor(props){
@@ -31,7 +32,7 @@ class EditUser extends Component {
 
   componentDidMount(){
     const user = this.props.auth.user
-    axios.get('http://localhost:5000/users/'+user.id)
+    axios.get(API_URL+"/users/"+user.id)
       .then(response => {
         this.setState({
           name: response.data.name,
@@ -101,7 +102,7 @@ class EditUser extends Component {
       subjects: this.state.subjects
     }
 
-    axios.post('http://localhost:5000/users/update/'+this.props.match.params.id, user)
+    axios.post(API_URL+"/users/update/"+this.props.match.params.id, user)
       .then(res => console.log(res.data));
 
   }

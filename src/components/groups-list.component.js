@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'; 
+import axios from 'axios';
+import { API_URL } from "../config";
 
 const Group = props => (
   <li>
@@ -20,7 +21,7 @@ export default class GroupsList extends Component {
   }
 
   componentDidMount(){
-    axios.get('http://localhost:5000/groups/')
+    axios.get(API_URL+"/groups/")
       .then(response => {
         this.setState({ groups: response.data })
       })
@@ -30,7 +31,7 @@ export default class GroupsList extends Component {
   }
 
   deleteGroup(id) {
-    axios.delete('http://localhost:5000/groups/'+id)
+    axios.delete(API_URL+"/groups/"+id)
       .then(response => { console.log(response.data)});
       
     this.setState({
