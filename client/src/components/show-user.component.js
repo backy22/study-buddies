@@ -12,6 +12,7 @@ export default class ShowUser extends Component {
       title: '',
       area: '',
       age: '',
+      email: '',
       introduction: '',
       goal: '',
       subjects: []
@@ -26,6 +27,7 @@ export default class ShowUser extends Component {
           title: response.data.title,
           area: response.data.area,
           age: response.data.age,
+          email: response.data.email,
           introduction: response.data.introduction,
           goal: response.data.goal,
           subjects: response.data.subjects
@@ -34,12 +36,17 @@ export default class ShowUser extends Component {
       .catch(function (error) {
         console.log(error);
       })
+
   }
 
   render() {
+    var gravatar = require('gravatar');
+    var url = gravatar.url(this.state.email);
+
     return (
     <div>
       <h3>{this.state.name}</h3>
+      <img src={url} />
       <p>{this.state.title}</p>
       <p>{this.state.area}</p>
       <p>{this.state.age}</p>

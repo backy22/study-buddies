@@ -17,7 +17,9 @@ export default class UsersList extends Component {
     super(props);
 
     this.deleteUser = this.deleteUser.bind(this);
-    this.state = {users: []};
+    this.state = {
+      users: []
+    };
   }
 
   componentDidMount(){
@@ -48,7 +50,7 @@ export default class UsersList extends Component {
   render() {
     return (
       <div>
-        <h3>Logged Users</h3>
+        <h3>Study Buddies</h3>
         <table className="table">
           <thead className="thead-light">
             <tr>

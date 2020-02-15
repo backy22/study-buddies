@@ -95,17 +95,25 @@ class ShowGroup extends Component {
     })
   }
 
+  groupTitle() {
+    if (this.state.organizer_id == this.props.auth.user.id){
+      return <h3>{this.state.title}<Link to={"/edit/"+this.props.match.params.id}>edit</Link></h3>
+    }else{
+      return <h3>{this.state.title}</h3>
+    }
+  }
+
   render() {
     return (
     <div>
-      <h3>{this.state.title}<Link to={"/edit/"+this.props.match.params.id}>edit</Link> </h3>
+      {this.groupTitle()}
       <p>{this.state.description}</p>
       <p>Limit number: {this.state.people} people</p>
       <h4>Study Buddies</h4>
       {this.userList()}
       <Button onClick={this.handleClick}>Join</Button>
     </div>
-    )
+    );
   }
 }
 

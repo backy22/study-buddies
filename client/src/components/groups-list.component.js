@@ -1,18 +1,33 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { API_URL } from "../config";
 
-const Group = props => (
-  <li>
-    {props.group.start_at} ~ {props.group.end_at}
-    {props.group.address}
-    {props.group.title}
-    <Link to={"/show/"+props.group._id}>show</Link> | <a href="#" onClick={() => { props.deleteGroup(props.group._id) }}>delete</a>
-  </li>
-)
+const Group = props => {
+  if (props.group.organizer_id == props.user.id){ 
+    return(
+      <li>
+        {props.group.start_at} ~ {props.group.end_at}
+        {props.group.address}
+        {props.group.title}
+        <Link to={"/show/"+props.group._id}>show</Link> | <a href="#" onClick={() => { props.deleteGroup(props.group._id) }}>delete</a>
+      </li>
+    );
+  }else{
+    return(
+      <li>
+        {props.group.start_at} ~ {props.group.end_at}
+        {props.group.address}
+        {props.group.title}
+        <Link to={"/show/"+props.group._id}>show</Link>
+      </li>
+    );
+  }
+}
 
-export default class GroupsList extends Component {
+class GroupsList extends Component {
   constructor(props){
     super(props);
 
@@ -41,7 +56,7 @@ export default class GroupsList extends Component {
 
   groupList(){
     return this.state.groups.map(currentgroup => {
-      return <Group group={currentgroup} deleteGroup={this.deleteGroup} key={currentgroup._id} />;
+      return <Group group={currentgroup} deleteGroup={this.deleteGroup} key={currentgroup._id} user={this.props.auth.user}/>;
     })
   }
 
@@ -55,3 +70,15 @@ export default class GroupsList extends Component {
     )
   }
 }
+
+GroupsList.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps
+)(GroupsList);

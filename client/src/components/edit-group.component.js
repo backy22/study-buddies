@@ -29,7 +29,6 @@ export default class EditGroups extends Component {
     }
   }
 
-
   componentDidMount(){
     axios.get(API_URL+"/groups/"+this.props.match.params.id)
       .then(response => {
@@ -118,8 +117,6 @@ export default class EditGroups extends Component {
       user_ids: this.state.user_ids
     }
 
-    console.log(group);
-
     axios.post(API_URL+"/groups/update/"+this.props.match.params.id, group)
       .then(res => console.log(res.data));
 
@@ -176,7 +173,7 @@ export default class EditGroups extends Component {
         </div>
 
         <div className="form-group">
-          <input type="submit" value="Edit Group Log" className="btn btn-primary" />
+          <input type="submit" value="Edit Group" className="btn btn-primary" />
         </div>
       </form>
     </div>

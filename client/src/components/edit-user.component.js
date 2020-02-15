@@ -24,6 +24,7 @@ class EditUser extends Component {
       title: '',
       area: '',
       age: '',
+      email: '',
       introduction: '',
       goal: [],
       subjects: []
@@ -39,6 +40,7 @@ class EditUser extends Component {
           title: response.data.title,
           area: response.data.area,
           age: response.data.age,
+          email: response.data.email,
           introduction: response.data.introduction,
           goal: response.data.goal,
           subjects: response.data.subjects
@@ -52,6 +54,12 @@ class EditUser extends Component {
   onChangeName(e) {
     this.setState({
       name: e.target.value
+    });
+  }
+
+  onChangeEmail(e) {
+    this.setState({
+      email: e.target.value
     });
   }
 
@@ -97,6 +105,7 @@ class EditUser extends Component {
       title: this.state.title,
       area: this.state.area,
       age: this.state.age,
+      email: this.state.email,
       introduction: this.state.introduction,
       goal: this.state.goal,
       subjects: this.state.subjects
@@ -108,6 +117,9 @@ class EditUser extends Component {
   }
 
   render() {
+    var gravatar = require('gravatar');
+    var url = gravatar.url(this.state.email);
+
     return (
       <div>
         <h3>Edit Profile</h3>
@@ -120,6 +132,19 @@ class EditUser extends Component {
                 value={this.state.name}
                 onChange={this.onChangeName}
                 />
+          </div>
+          <div className="form-group"> 
+            <label>Email: </label>
+            <input  type="text"
+                required
+                className="form-control"
+                value={this.state.email}
+                onChange={this.onChangeEmail}
+                />
+          </div>
+          <div className="mb-1">
+            <div><img src={url} /></div>
+            <small>※If you want to change image, please upload from <a href="https://en.gravatar.com/emails/" target="blank">here.</a></small>
           </div>
           <div className="form-group"> 
             <label>Subjects: </label>
