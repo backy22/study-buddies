@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Image } from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -143,7 +144,7 @@ class EditUser extends Component {
                 />
           </div>
           <div className="mb-1">
-            <div><img src={url} /></div>
+            <div><Image src={url} roundedCircle /></div>
             <small>※If you want to change image, please upload from <a href="https://en.gravatar.com/emails/" target="blank">here.</a></small>
           </div>
           <div className="form-group"> 

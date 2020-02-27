@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
+import Moment from 'react-moment';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { API_URL } from "../config";
 
-const User = props => (
-  <div><Link to={"/users/"+props.user._id}>{props.user.name}</Link></div>
-)
+const User = props => {
+  var gravatar = require('gravatar');
+  var url = gravatar.url(props.user.email);
+  return (
+    <div>
+      <Link to={"/users/"+props.user._id}>
+        <Image src={url} roundedCircle className="mr-3 mb-3" />
+        {props.user.name}
+      </Link>
+    </div>
+  )
+}
 
 class ShowGroup extends Component {
   constructor(props){
@@ -107,6 +117,9 @@ class ShowGroup extends Component {
     return (
     <div>
       {this.groupTitle()}
+      <Moment format="YYYY/MM/DD HH:mm">{this.state.start_at}</Moment> ~ 
+      <Moment format="YYYY/MM/DD HH:mm">{this.state.end_at}</Moment>
+      @{this.state.address}
       <p>{this.state.description}</p>
       <p>Limit number: {this.state.people} people</p>
       <h4>Study Buddies</h4>

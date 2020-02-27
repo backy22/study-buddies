@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Image } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { API_URL } from "../config";
@@ -45,14 +46,14 @@ export default class ShowUser extends Component {
 
     return (
     <div>
+      <Image src={url} roundedCircle />
       <h3>{this.state.name}</h3>
-      <img src={url} />
       <p>{this.state.title}</p>
-      <p>{this.state.area}</p>
-      <p>{this.state.age}</p>
-      <p>{this.state.introduction}</p>
-      <p>{this.state.goal}</p>
-      <p>{this.state.subjects}</p>
+      <p>Studying: {this.state.subjects}</p>
+      <p>Area: {this.state.area}</p>
+      <p>Age: {this.state.age}</p>
+      <p>Introduction: {this.state.introduction}</p>
+      <p>Goal: {this.state.goal}</p>
     </div>
     )
   }

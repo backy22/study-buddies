@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Image } from 'react-bootstrap';
 import axios from 'axios';
 import { API_URL } from "../config";
 
-const User = props => (
-  <tr>
-    <td><Link to={"/users/"+props.user._id}>{props.user.name}</Link></td>
-    <td>{props.user.title}</td>
-    <td>{props.user.area}</td>
-    <td>{props.user.subjects}</td>
-  </tr>
-)
+const User = props => {
+  var gravatar = require('gravatar');
+  var url = gravatar.url(props.user.email);
+  return (
+    <tr>
+      <td><Link to={"/users/"+props.user._id}><Image src={url} roundedCircle className="mr-3"/>{props.user.name}</Link></td>
+      <td>{props.user.title}</td>
+      <td>{props.user.area}</td>
+      <td>{props.user.subjects}</td>
+    </tr>
+  )
+}
 
 export default class UsersList extends Component {
   constructor(props){

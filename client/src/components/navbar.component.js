@@ -23,21 +23,20 @@ class Navbar extends Component {
 
   render() {
     const auth = this.props.auth;
-
     const NavContent = props => {
       if (props.auth.isAuthenticated) {
         return (
           <ul className="navbar-nav mr-auto">
-            <li className={"navbar-item " + (window.location.pathname === '/' ? 'active' : '')}>
+            <li className="navbar-item">
               <Link to="/" className="nav-link">Study Groups</Link>
             </li>
-            <li className={"navbar-item " + (window.location.pathname === '/create' ? 'active' : '')}>
+            <li className="navbar-item">
               <Link to="/create" className="nav-link">Create Group</Link>
             </li>
-            <li className={"navbar-item " + (window.location.pathname === '/users' ? 'active' : '')}>
+            <li className="navbar-item">
               <Link to="/users" className="nav-link">Study Buddies</Link>
             </li> 
-            <li className={"navbar-item " + (window.location.pathname == '/edit/users' ? 'active' : '')}>
+            <li className="navbar-item">
               <Link to={"/edit/users/"+props.auth.user.id} className="nav-link">Profile</Link>
             </li>
             <li className="navbar-item">
@@ -48,16 +47,16 @@ class Navbar extends Component {
       }else{
         return (
           <ul className="navbar-nav mr-auto">
-            <li className={"navbar-item " + (window.location.pathname === '/' ? 'active' : '')} >
+            <li className="navbar-item">
               <Link to="/" className="nav-link">Study Groups</Link>
             </li>
-            <li className={"navbar-item " + (window.location.pathname === '/users' ? 'active' : '')}>
+            <li className="navbar-item">
               <Link to="/users" className="nav-link">Study Buddies</Link>
             </li> 
-            <li className={"navbar-item " + (window.location.pathname === '/login' ? 'active' : '')}>
+            <li className="navbar-item">
               <Link to="/login" className="nav-link">Login</Link>
             </li>
-            <li className={"navbar-item " + (window.location.pathname === '/register' ? 'active' : '')}>
+            <li className="navbar-item">
               <Link to="/register" className="nav-link">Register</Link>
             </li>
           </ul>
@@ -80,7 +79,7 @@ class Navbar extends Component {
           <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
             <Link to="/" className="navbar-brand">Study Buddies</Link>
             <div className="collpase navbar-collapse">
-              <NavContent auth={auth}/>
+              <NavContent auth={auth} />
             </div>
           </nav>
           <br/>
