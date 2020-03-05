@@ -63,8 +63,15 @@ function ShowGroup() {
   },[]);
 
 
-  function handleClick() {
-    var new_user_ids = users.user_ids.concat(loginuser.login_user_id)
+  function handleClick(action) {
+    let new_user_ids;
+    if (action == 'join'){
+      new_user_ids = users.user_ids.concat(loginuser.login_user_id)
+    }else if(action == 'leave'){
+      new_user_ids = users.user_ids.filter(item => item !== loginuser.login_user_id)
+    }else{
+      return;
+    }
     axios.get(API_URL+"/users/")
       .then(res => {
         if (res.data.length > 0){
@@ -100,14 +107,26 @@ function ShowGroup() {
  const User = props => {
     var gravatar = require('gravatar');
     var url = gravatar.url(props.user.email);
-    return (
-      <div>
+    if (auth.user.id == props.user._id){
+      return (
+        <div>
         <Link to={"/users/"+ props.user._id}>
-          <Image src={url} roundedCircle className="mr-3 mb-3" />
-          {props.user.name}
+        <Image src={url} roundedCircle className="mr-3 mb-3" />
+        {props.user.name}
         </Link>
-      </div>
-    )
+        <Button variant="danger" onClick={(e) => handleClick('leave', e)}>Leave</Button> 
+        </div>
+      )
+    }else{
+      return (
+        <div>
+        <Link to={"/users/"+ props.user._id}>
+        <Image src={url} roundedCircle className="mr-3 mb-3" />
+        {props.user.name}
+        </Link>
+        </div>
+      )
+    }
   }
 
   const GroupTitle = () => {
@@ -115,6 +134,14 @@ function ShowGroup() {
       return <h3>{state.title}<Link to={"/edit/"+ params.id}>edit</Link></h3>
     }else{
       return <h3>{state.title}</h3>
+    }
+  }
+
+  const JoinButton = () => {
+    if (Object.keys(auth.user).length > 0){
+      return <Button onClick={(e) => handleClick('join', e)}>Join</Button>
+    }else{
+      return null;
     }
   }
 
@@ -128,7 +155,7 @@ function ShowGroup() {
       <p>Limit number: {state.people} people</p>
       <h4>Study Buddies</h4>
       <UserList />
-      <Button onClick={handleClick}>Join</Button>
+      <JoinButton />
     </div>
   );
 }
