@@ -1,29 +1,28 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image } from 'react-bootstrap';
 import axios from 'axios';
+import { useParams } from "react-router";
 import { Link } from 'react-router-dom';
 import { API_URL } from "../config";
 
-export default class ShowUser extends Component {
-  constructor(props){
-    super(props);
+function ShowUser() {
+  const [state, setState] = useState({
+    name: '',
+    title: '',
+    area: '',
+    age: '',
+    email: '',
+    introduction: '',
+    goal: '',
+    subjects: []
+  });
 
-    this.state = {
-      name: '',
-      title: '',
-      area: '',
-      age: '',
-      email: '',
-      introduction: '',
-      goal: '',
-      subjects: []
-    }
-  }
+  let params = useParams();
 
-  componentDidMount(){
-    axios.get(API_URL+"/users/"+this.props.match.params.id)
+  useEffect(() => {
+    axios.get(API_URL+"/users/" + params.id)
       .then(response => {
-        this.setState({
+        setState({
           name: response.data.name,
           title: response.data.title,
           area: response.data.area,
@@ -38,23 +37,23 @@ export default class ShowUser extends Component {
         console.log(error);
       })
 
-  }
+  },[]);
 
-  render() {
     var gravatar = require('gravatar');
-    var url = gravatar.url(this.state.email);
+    var url = gravatar.url(state.email);
 
-    return (
-    <div>
-      <Image src={url} roundedCircle />
-      <h3>{this.state.name}</h3>
-      <p>{this.state.title}</p>
-      <p>Studying: {this.state.subjects}</p>
-      <p>Area: {this.state.area}</p>
-      <p>Age: {this.state.age}</p>
-      <p>Introduction: {this.state.introduction}</p>
-      <p>Goal: {this.state.goal}</p>
-    </div>
-    )
-  }
+  return (
+  <div>
+    <Image src={url} roundedCircle />
+    <h3>{state.name}</h3>
+    <p>{state.title}</p>
+    <p>Studying: {state.subjects}</p>
+    <p>Area: {state.area}</p>
+    <p>Age: {state.age}</p>
+    <p>Introduction: {state.introduction}</p>
+    <p>Goal: {state.goal}</p>
+  </div>
+  )
 }
+
+export default ShowUser

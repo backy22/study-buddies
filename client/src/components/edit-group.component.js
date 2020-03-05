@@ -1,38 +1,28 @@
-import React, { Component } from 'react';
-import axios from 'axios'; 
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from "react-router";
 import * as Datetime from 'react-datetime';
 import { API_URL } from "../config";
 
-export default class EditGroups extends Component {
-  constructor(props){
-    super(props);
+function EditGroup() {
+  const [state, setState] = useState({
+    title: '',
+    description: '',
+    address: '',
+    start_at: new Date(),
+    end_at: new Date(),
+    people: 0,
+    is_private: false,
+    organizer_id: '',
+    user_ids: []
+  });
 
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeAddress = this.onChangeAddress.bind(this);
-    this.onChangeStartAt = this.onChangeStartAt.bind(this);
-    this.onChangeEndAt = this.onChangeEndAt.bind(this);
-    this.onChangePeople = this.onChangePeople.bind(this);
-    this.onChangeIsPrivate = this.onChangeIsPrivate.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+  let params = useParams();
 
-    this.state = {
-      title: '',
-      description: '',
-      address: '',
-      start_at: new Date(),
-      end_at: new Date(),
-      people: 0,
-      is_private: false,
-      organizer_id: '',
-      user_ids: []
-    }
-  }
-
-  componentDidMount(){
-    axios.get(API_URL+"/groups/"+this.props.match.params.id)
+  useEffect(() => {
+    axios.get(API_URL+"/groups/" + params.id)
       .then(response => {
-        this.setState({
+        setState({
           title: response.data.title,
           description: response.data.description,
           address: response.data.address,
@@ -48,108 +38,89 @@ export default class EditGroups extends Component {
         console.log(error);
       })
 
-    console.log(this.state)
-
     axios.get(API_URL+"/users/")
       .then(response => {
         if (response.data.length > 0){
-          this.setState({
-            users: response.data.map(user => user.username),
-          })
+          setState({...state, users: response.data.map(user => user.username)})
         }
       })
+  },[])
+
+  const onChangeTitle = e => {
+    setState({...state, title: e.target.value});
   }
 
-  onChangeTitle(e) {
-    this.setState({
-      title: e.target.value
-    });
+  const onChangeDescription = e => {
+    setState({...state, description: e.target.value});
   }
 
-  onChangeDescription(e) {
-    this.setState({
-      description: e.target.value
-    });
+  const onChangeAddress = e => {
+    setState({...state, address: e.target.value});
   }
 
-  onChangeAddress(e) {
-    this.setState({
-      address: e.target.value
-    });
+  const onChangeStartAt = date => {
+    setState({...state, start_at: date._d});
   }
 
-  onChangeStartAt(date) {
-    this.setState({
-      start_at: date._d
-    });
+  const onChangeEndAt = date => {
+    setState({...state, end_at: date._d});
   }
 
-  onChangeEndAt(date) {
-    this.setState({
-      end_at: date._d
-    });
+  const onChangePeople = e => {
+    setState({...state, people: e.target.value});
   }
 
-  onChangePeople(e) {
-    this.setState({
-      people: e.target.value
-    });
+  const onChangeIsPrivate = e => {
+    setState({...state, is_private: e.target.value});
   }
 
-  onChangeIsPrivate(e) {
-    this.setState({
-      is_private: e.target.value
-    });
-  }
-
-  onSubmit(e){
+  const onSubmit = e => {
     e.preventDefault();
 
     const group = {
-      title: this.state.title,
-      description: this.state.description,
-      address: this.state.address,
-      start_at: this.state.start_at,
-      end_at: this.state.end_at,
-      people: this.state.people,
-      is_private: this.state.is_private,
-      organizer_id: this.state.organizer_id,
-      user_ids: this.state.user_ids
+      title: state.title,
+      description: state.description,
+      address: state.address,
+      start_at: state.start_at,
+      end_at: state.end_at,
+      people: state.people,
+      is_private: state.is_private,
+      organizer_id: state.organizer_id,
+      user_ids: state.user_ids
     }
 
-    axios.post(API_URL+"/groups/update/"+this.props.match.params.id, group)
+    axios.post(API_URL+"/groups/update/" + params.id, group)
       .then(res => console.log(res.data));
 
     window.location = '/';
 
   }
 
-   render() {
     return (
     <div>
       <h3>Edit Group</h3>
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={onSubmit}>
         <div className="form-group"> 
           <label>Title: </label>
           <input  type="text"
               required
               className="form-control"
-              value={this.state.title}
-              onChange={this.onChangeTitle}
+              value={state.title}
+              onChange={onChangeTitle}
               />
         </div>
         <div className="form-group">
           <label>DateTime: </label>
           <div>
             <Datetime
-              value={this.state.start_at}
-              dateTime={this.state.start_at}
-              onChange={this.onChangeStartAt}
+              value={state.start_at}
+              dateTime={state.start_at}
+              onChange={onChangeStartAt}
             /> ~
             <Datetime
-              value={this.state.end_at}
-              dateTime={this.state.end_at}
-              onChange={this.onChangeEndAt}
+              value={state.end_at}
+              dateTime={state.end_at}
+              onChange={onChangeEndAt}
             />
           </div>
         </div>
@@ -158,8 +129,8 @@ export default class EditGroups extends Component {
           <input  type="text"
               required
               className="form-control"
-              value={this.state.description}
-              onChange={this.onChangeDescription}
+              value={state.description}
+              onChange={onChangeDescription}
               />
         </div>
         <div className="form-group">
@@ -167,8 +138,8 @@ export default class EditGroups extends Component {
           <input 
               type="text" 
               className="form-control"
-              value={this.state.people}
-              onChange={this.onChangePeople}
+              value={state.people}
+              onChange={onChangePeople}
               />
         </div>
 
@@ -178,5 +149,6 @@ export default class EditGroups extends Component {
       </form>
     </div>
     )
-  }
 }
+
+export default EditGroup

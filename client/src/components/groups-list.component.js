@@ -1,91 +1,78 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ListGroup } from 'react-bootstrap';
 import Moment from 'react-moment';
 import axios from 'axios';
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../config";
 
-const Group = props => {
-  if (props.group.organizer_id == props.user.id){ 
-    return(
-      <ListGroup.Item>
-        <Link to={"/show/"+props.group._id}>
-          <Moment format="YYYY/MM/DD HH:mm">{props.group.start_at}</Moment> ~ 
-          <Moment format="YYYY/MM/DD HH:mm">{props.group.end_at}</Moment>
-          @{props.group.address}
-          <h4>{props.group.title}</h4>
-        </Link>
-        <a href="#" onClick={() => { props.deleteGroup(props.group._id) }}>delete</a>
-      </ListGroup.Item>
-    );
-  }else{
-    return(
-      <ListGroup.Item>
-        <Link to={"/show/"+props.group._id}>
-          <Moment format="YYYY/MM/DD HH:mm">{props.group.start_at}</Moment> ~ 
-          <Moment format="YYYY/MM/DD HH:mm">{props.group.end_at}</Moment>
-          @{props.group.address}
-          <h4>{props.group.title}</h4>
-        </Link>
-      </ListGroup.Item>
-    );
-  }
-}
+function GroupsList() {
+  const [state, setState] = useState({
+      groups: []
+  });
 
-class GroupsList extends Component {
-  constructor(props){
-    super(props);
-
-    this.deleteGroup = this.deleteGroup.bind(this);
-    this.state = {groups: []};
-  }
-
-  componentDidMount(){
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
     axios.get(API_URL+"/groups/")
       .then(response => {
-        this.setState({ groups: response.data })
+        setState({ groups: response.data })
       })
       .catch((error) => {
         console.log(error);
       })
+  },[]);
+
+  const Group = props => {
+    if (props.group.organizer_id == props.user.id){ 
+      return(
+        <ListGroup.Item>
+          <Link to={"/show/"+props.group._id}>
+            <Moment format="YYYY/MM/DD HH:mm">{props.group.start_at}</Moment> ~ 
+            <Moment format="YYYY/MM/DD HH:mm">{props.group.end_at}</Moment>
+            @{props.group.address}
+            <h4>{props.group.title}</h4>
+          </Link>
+          <a href="#" onClick={() => { props.deleteGroup(props.group._id) }}>delete</a>
+        </ListGroup.Item>
+      );
+    }else{
+      return(
+        <ListGroup.Item>
+          <Link to={"/show/"+props.group._id}>
+            <Moment format="YYYY/MM/DD HH:mm">{props.group.start_at}</Moment> ~ 
+            <Moment format="YYYY/MM/DD HH:mm">{props.group.end_at}</Moment>
+            @{props.group.address}
+            <h4>{props.group.title}</h4>
+          </Link>
+        </ListGroup.Item>
+      );
+    }
   }
 
-  deleteGroup(id) {
+  function deleteGroup(id) {
     axios.delete(API_URL+"/groups/"+id)
       .then(response => { console.log(response.data)});
       
-    this.setState({
-      groups: this.state.groups.filter(el => el._id !== id)
+    setState({
+      groups: state.groups.filter(el => el._id !== id)
     })
   }
 
-  groupList(){
-    return this.state.groups.map(currentgroup => {
-      return <Group group={currentgroup} deleteGroup={this.deleteGroup} key={currentgroup._id} user={this.props.auth.user}/>;
+  const GroupList = () => {
+    return state.groups.map(currentgroup => {
+      return <Group group={currentgroup} deleteGroup={deleteGroup} key={currentgroup._id} user={auth.user}/>;
     })
   }
 
-  render() {
-    return (
-      <div>
-        <ListGroup>
-          { this.groupList() }
-        </ListGroup>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <ListGroup>
+        <GroupList />
+      </ListGroup>
+    </div>
+  )
 }
 
-GroupsList.propTypes = {
-  auth: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-export default connect(
-  mapStateToProps
-)(GroupsList);
+export default GroupsList
