@@ -68,7 +68,7 @@ function GroupsList() {
   }
 
   return (
-    <div>
+    <div className="content">
       <ListGroup>
         <GroupList />
       </ListGroup>

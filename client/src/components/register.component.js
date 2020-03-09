@@ -54,7 +54,7 @@ function Register(props) {
   }
 
   return (
-    <div>
+    <div className="content">
       <h3>Register</h3>
       <Form onSubmit={onSubmit}>
         <Form.Group controlId="formBasicName">
@@ -91,7 +91,7 @@ function Register(props) {
         </Form.Group>
         <Link to="../login">Already registered?</Link>
         <br />
-        <Button variant="primary" type="submit">
+        <Button className="btn-commit mt-3" type="submit">
           Register
         </Button>
       </Form>

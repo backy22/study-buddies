@@ -56,6 +56,11 @@ function ShowGroup() {
         axios.get(API_URL+"/users/")
           .then(res => {
             if (res.data.length > 0){
+              let user_ids = response.data.user_ids
+              user_ids.push(response.data.organizer_id)
+              user_ids = user_ids.filter(function (x, i, self) {
+                return self.indexOf(x) === i;
+              });
               setUsers({user_ids: response.data.user_ids, users: res.data.filter(user => response.data.user_ids.includes(user._id))})
             }
           })
@@ -123,7 +128,7 @@ function ShowGroup() {
             <Image src={url} roundedCircle className="mb-3" />
             <p>{props.user.name}</p>
           </Link>
-          <Button variant="danger" onClick={(e) => handleClick('leave', e)}>Leave</Button> 
+          <Button className="btn-undo" onClick={(e) => handleClick('leave', e)}>Leave</Button> 
         </div>
       )
     }else{
@@ -180,7 +185,7 @@ function ShowGroup() {
   };
 
   const JoinButton = () => {
-    if (Object.keys(auth.user).length > 0){
+    if (Object.keys(auth.user).length > 0 && !isOrganizer){
       return <Button className="mb-2" onClick={(e) => handleClick('join', e)}>Join</Button>
     }else{
       return null;
@@ -190,7 +195,7 @@ function ShowGroup() {
   const isOrganizer = (state.organizer_id === auth.user.id)
 
   return (
-    <div>
+    <div className="content">
       <div className="mb-4">
         <GroupTitle />
         <Moment format="YYYY/MM/DD HH:mm">{state.start_at}</Moment> ~ 

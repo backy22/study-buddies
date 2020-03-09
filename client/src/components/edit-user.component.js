@@ -95,7 +95,7 @@ function EditUser() {
   var url = gravatar.url(state.email);
 
   return (
-    <div>
+    <div className="content">
       <h3>Edit Profile</h3>
       <form onSubmit={onSubmit}>
         <div className="form-group"> 
@@ -173,7 +173,7 @@ function EditUser() {
           />
         </div>
         <div className="form-group">
-          <input type="submit" value="Update User" className="btn btn-primary" />
+          <input type="submit" value="Update User" className="btn btn-commit" />
         </div>
       </form>
     </div>

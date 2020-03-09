@@ -43,7 +43,7 @@ function ShowUser() {
     var url = gravatar.url(state.email);
 
   return (
-  <div>
+  <div className="content">
     <Container className="mb-5">
       <Row>
         <Col xs lg="2" className="text-center">

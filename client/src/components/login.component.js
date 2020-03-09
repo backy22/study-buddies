@@ -66,7 +66,7 @@ class Login extends Component {
     const { errors } = this.state;
 
     return (
-      <div>
+      <div className="content">
         <h3>Login</h3>
         <Form onSubmit={this.onSubmit}>
           <Form.Group controlId="formBasicEmail">
@@ -97,7 +97,7 @@ class Login extends Component {
           <Form.Group controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Check me out" />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button className="btn-commit" type="submit">
             Login
           </Button>
         </Form>

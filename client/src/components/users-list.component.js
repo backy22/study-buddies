@@ -39,10 +39,10 @@ function UsersList() {
   }
 
   return (
-    <div>
+    <div className="content">
       <h3>Study Buddies</h3>
       <table className="table">
-        <thead className="thead-light">
+        <thead className="thead">
           <tr>
             <th>Username</th>
             <th>Title</th>

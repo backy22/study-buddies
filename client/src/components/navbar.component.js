@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../actions/authActions";
 import { Button } from 'react-bootstrap';
+import logo from "../img/logo.svg";
 
 import GroupsList from "./groups-list.component";
 import EditGroup from "./edit-group.component";
@@ -28,7 +29,7 @@ class Navbar extends Component {
         return (
           <ul className="navbar-nav mr-auto">
             <li className="navbar-item">
-              <Link to="/" className="nav-link">Study Groups</Link>
+              <Link to="/" className="nav-link">Study Buddies</Link>
             </li>
             <li className="navbar-item">
               <Link to="/create" className="nav-link">Create Group</Link>
@@ -48,7 +49,7 @@ class Navbar extends Component {
         return (
           <ul className="navbar-nav mr-auto">
             <li className="navbar-item">
-              <Link to="/" className="nav-link">Study Groups</Link>
+              <Link to="/" className="nav-link">Study Buddies</Link>
             </li>
             <li className="navbar-item">
               <Link to="/users" className="nav-link">Study Buddies</Link>
@@ -76,8 +77,8 @@ class Navbar extends Component {
     return (
       <Router>
         <div className="container">
-          <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-            <Link to="/" className="navbar-brand">Study Buddies</Link>
+          <nav className="navbar navbar-expand-lg">
+            <Link to="/" className="navbar-brand logo"><img src={logo} alt="logo"/></Link>
             <div className="collpase navbar-collapse">
               <NavContent auth={auth} />
             </div>

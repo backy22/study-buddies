@@ -74,7 +74,7 @@ function CreateGroup() {
   }
 
   return (
-    <div>
+    <div className="content">
       <h3>Create New Group</h3>
       <form onSubmit={onSubmit}>
         <div className="form-group"> 
@@ -140,7 +140,7 @@ function CreateGroup() {
           <label for="private">Private</label>
         </div>
         <div className="form-group">
-          <input type="submit" value="Create Group" className="btn btn-primary" />
+          <input type="submit" value="Create Group" className="btn btn-commit" />
         </div>
       </form>
     </div>
