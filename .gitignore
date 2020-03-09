@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 client/node_modules/
+
+.env

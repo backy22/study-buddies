@@ -35,8 +35,8 @@ app.post('/send-email', function(req,res){
     port: 465,
     secure: true,
     auth: {
-      user: 'aya.tsubakino@gmail.com',
-      pass: 'e2g1LXvu'
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS
     }
   });
   let mailOptions = {
