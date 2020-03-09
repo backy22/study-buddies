@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Form, FormGroup, Button, Alert } from 'react-bootstrap';
-import { useDispatch, useSelector } from "react-redux";
-import classnames from "classnames";
+import { Form, Button } from 'react-bootstrap';
+import { useSelector } from "react-redux";
 import { API_URL } from "../config";
 
 function Register(props) {

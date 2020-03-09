@@ -27,7 +27,7 @@ function UsersList() {
         <td><Link to={"/users/"+props.user._id}><Image src={url} roundedCircle className="mr-3"/>{props.user.name}</Link></td>
         <td>{props.user.title}</td>
         <td>{props.user.area}</td>
-        <td>{props.user.subjects}</td>
+        <td>{props.user.subjects.join(',')}</td>
       </tr>
     )
   }

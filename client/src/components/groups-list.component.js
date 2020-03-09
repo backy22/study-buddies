@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ListGroup } from 'react-bootstrap';
 import Moment from 'react-moment';
 import axios from 'axios';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { API_URL } from "../config";
 
 function GroupsList() {
@@ -12,7 +12,6 @@ function GroupsList() {
   });
 
   const auth = useSelector(state => state.auth);
-  const dispatch = useDispatch();
   
   useEffect(() => {
     axios.get(API_URL+"/groups/")
@@ -25,7 +24,7 @@ function GroupsList() {
   },[]);
 
   const Group = props => {
-    if (props.group.organizer_id == props.user.id){ 
+    if (props.group.organizer_id === props.user.id){ 
       return(
         <ListGroup.Item>
           <Link to={"/show/"+props.group._id}>
@@ -37,6 +36,8 @@ function GroupsList() {
           <a href="#" onClick={() => { props.deleteGroup(props.group._id) }}>delete</a>
         </ListGroup.Item>
       );
+    }else if(props.group.is_private){
+      return null
     }else{
       return(
         <ListGroup.Item>

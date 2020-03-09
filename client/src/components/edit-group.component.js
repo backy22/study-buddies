@@ -9,6 +9,7 @@ function EditGroup() {
     title: '',
     description: '',
     address: '',
+    map_src: '',
     start_at: new Date(),
     end_at: new Date(),
     people: 0,
@@ -26,6 +27,7 @@ function EditGroup() {
           title: response.data.title,
           description: response.data.description,
           address: response.data.address,
+          map_src: response.data.map_src,
           start_at: new Date(response.data.start_at),
           end_at: new Date(response.data.end_at),
           people: response.data.people,
@@ -38,12 +40,6 @@ function EditGroup() {
         console.log(error);
       })
 
-    axios.get(API_URL+"/users/")
-      .then(response => {
-        if (response.data.length > 0){
-          setState({...state, users: response.data.map(user => user.username)})
-        }
-      })
   },[])
 
   const onChangeTitle = e => {
@@ -56,6 +52,10 @@ function EditGroup() {
 
   const onChangeAddress = e => {
     setState({...state, address: e.target.value});
+  }
+
+  const onChangeMapSrc = e => {
+    setState({...state, map_src: e.target.value});
   }
 
   const onChangeStartAt = date => {
@@ -81,6 +81,7 @@ function EditGroup() {
       title: state.title,
       description: state.description,
       address: state.address,
+      map_src: state.map_src,
       start_at: state.start_at,
       end_at: state.end_at,
       people: state.people,
@@ -124,6 +125,24 @@ function EditGroup() {
             />
           </div>
         </div>
+        <div className="form-group">
+          <label>Address: </label>
+          <input  type="text"
+              required
+              className="form-control"
+              value={state.address}
+              onChange={onChangeAddress}
+              />
+        </div>
+        <div className="form-group">
+          <label>Map Source: </label>
+          <input  type="text"
+              required
+              className="form-control"
+              value={state.map_src}
+              onChange={onChangeMapSrc}
+              />
+        </div>
         <div className="form-group"> 
           <label>Description: </label>
           <input  type="text"
@@ -142,7 +161,6 @@ function EditGroup() {
               onChange={onChangePeople}
               />
         </div>
-
         <div className="form-group">
           <input type="submit" value="Edit Group" className="btn btn-primary" />
         </div>

@@ -15,3 +15,13 @@ code {
 a {
   color: black;
 }
+
+.user-container {
+  display: grid;
+  grid-template-columns: repeat(5, 200px);
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
+}

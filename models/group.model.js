@@ -5,6 +5,7 @@ const groupSchema = new Schema({
   title: {type: String, required: true},
   description: {type: String, required: true},
   address: {type: String, required: false},
+  map_src: {type: String, required: false},
   start_at: {type: Date, required: true},
   end_at: {type: Date, required: false},
   people: {type: Number, required: true},

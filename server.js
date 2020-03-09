@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const nodeMailer = require('nodemailer')
 
 require('dotenv').config();
 
@@ -27,6 +28,31 @@ require("./config/passport")(passport);
 
 app.use('/groups', groupsRouter);
 app.use('/users', usersRouter);
+
+app.post('/send-email', function(req,res){
+  let transporter = nodeMailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'aya.tsubakino@gmail.com',
+      pass: 'e2g1LXvu'
+    }
+  });
+  let mailOptions = {
+    from: '"Study Buddies" <invitation@studybuddies.com>',
+    to: req.body.emails,
+    subject: "Invitation to the study group",
+    html: req.body.message
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+  });
+  res.end(); 
+});
 
 const path = require("path")
 app.use(express.static(path.join(__dirname, "client", "build")))

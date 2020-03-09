@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image } from 'react-bootstrap';
+import { Image, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { useParams } from "react-router";
 import { Link } from 'react-router-dom';
@@ -44,14 +44,23 @@ function ShowUser() {
 
   return (
   <div>
-    <Image src={url} roundedCircle />
-    <h3>{state.name}</h3>
-    <p>{state.title}</p>
-    <p>Studying: {state.subjects}</p>
-    <p>Area: {state.area}</p>
-    <p>Age: {state.age}</p>
-    <p>Introduction: {state.introduction}</p>
-    <p>Goal: {state.goal}</p>
+    <Container className="mb-5">
+      <Row>
+        <Col xs lg="2" className="text-center">
+          <Image src={url} roundedCircle />
+        </Col>
+        <Col>
+          <h3>{state.name} {state.age}, {state.area}</h3>
+          <p>{state.title}</p>
+        </Col>
+      </Row>
+    </Container>
+    <h4>Studying</h4>
+    <p className="mb-5">{state.subjects.join(',')}</p>
+    <h4>Goal</h4>
+    <p className="mb-5">{state.goal}</p>
+    <h4>Introduction:</h4>
+    <p>{state.introduction}</p>
   </div>
   )
 }

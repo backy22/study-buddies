@@ -3,8 +3,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router";
 import { Button, Image } from 'react-bootstrap';
+import { FaPlus, FaTrashAlt } from "react-icons/fa";
 import Moment from 'react-moment';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { API_URL } from "../config";
 
 function ShowGroup() {
@@ -12,6 +13,7 @@ function ShowGroup() {
     title: '',
     description: '',
     address: '',
+    map_src: '',
     start_at: new Date(),
     end_at: new Date(),
     people: 0,
@@ -22,6 +24,11 @@ function ShowGroup() {
   const [users, setUsers] = useState({
     users: [],
     user_ids: []
+  });
+
+  const [emails, setEmails] = useState({
+    email: '',
+    emails: [{address: ''}]
   });
 
   const [loginuser, setLoginUser] = useState({
@@ -39,6 +46,7 @@ function ShowGroup() {
           title: response.data.title,
           description: response.data.description,
           address: response.data.address,
+          map_src: response.data.map_src,
           start_at: new Date(response.data.start_at),
           end_at: new Date(response.data.end_at),
           people: response.data.people,
@@ -65,9 +73,9 @@ function ShowGroup() {
 
   function handleClick(action) {
     let new_user_ids;
-    if (action == 'join'){
+    if (action === 'join'){
       new_user_ids = users.user_ids.concat(loginuser.login_user_id)
-    }else if(action == 'leave'){
+    }else if(action === 'leave'){
       new_user_ids = users.user_ids.filter(item => item !== loginuser.login_user_id)
     }else{
       return;
@@ -86,6 +94,7 @@ function ShowGroup() {
       title: state.title,
       description: state.description,
       address: state.address,
+      map_src: state.map_src,
       start_at: state.start_at,
       end_at: state.end_at,
       people: state.people,
@@ -107,55 +116,121 @@ function ShowGroup() {
  const User = props => {
     var gravatar = require('gravatar');
     var url = gravatar.url(props.user.email);
-    if (auth.user.id == props.user._id){
+    if (auth.user.id === props.user._id){
       return (
         <div>
-        <Link to={"/users/"+ props.user._id}>
-        <Image src={url} roundedCircle className="mr-3 mb-3" />
-        {props.user.name}
-        </Link>
-        <Button variant="danger" onClick={(e) => handleClick('leave', e)}>Leave</Button> 
+          <Link to={"/users/"+ props.user._id}>
+            <Image src={url} roundedCircle className="mb-3" />
+            <p>{props.user.name}</p>
+          </Link>
+          <Button variant="danger" onClick={(e) => handleClick('leave', e)}>Leave</Button> 
         </div>
       )
     }else{
       return (
         <div>
-        <Link to={"/users/"+ props.user._id}>
-        <Image src={url} roundedCircle className="mr-3 mb-3" />
-        {props.user.name}
-        </Link>
+          <Link to={"/users/"+ props.user._id}>
+            <Image src={url} roundedCircle className="mb-3" />
+            <p>{props.user.name}</p>
+          </Link>
         </div>
       )
     }
   }
 
   const GroupTitle = () => {
-    if (state.organizer_id == auth.user.id){
-      return <h3>{state.title}<Link to={"/edit/"+ params.id}>edit</Link></h3>
+    if (state.organizer_id === auth.user.id){
+      return (
+        <div>
+          <h3>{state.title}</h3>
+          <Link to={"/edit/"+ params.id}>edit</Link>
+        </div>
+      )
     }else{
       return <h3>{state.title}</h3>
     }
   }
 
+  const handleEmailChange = (idx, e) => {
+    const newEmails = emails.emails.map((email, eidx) => {
+      if(idx !== eidx) return email;
+      return {...email, address: e.target.value};
+    });
+    setEmails({emails: newEmails});
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const new_emails = emails.emails
+    const message = '<p>Please join the study group from <a href=' + window.location.href + '>here</a></p>'
+    axios.post(API_URL+"/send-email", {emails: new_emails, message: message})
+     .then(res => console.log(res.data));
+    window.location.reload();
+  }
+
+  const handleAddEmail = () => {
+    setEmails({
+      emails: emails.emails.concat([{address: ""}])
+    });
+  };
+
+  function handleRemoveEmail(idx,e){
+    setEmails({...state, emails: emails.emails.filter((e, eidx) => idx !== eidx)
+    });
+  };
+
   const JoinButton = () => {
     if (Object.keys(auth.user).length > 0){
-      return <Button onClick={(e) => handleClick('join', e)}>Join</Button>
+      return <Button className="mb-2" onClick={(e) => handleClick('join', e)}>Join</Button>
     }else{
       return null;
     }
   }
 
+  const isOrganizer = (state.organizer_id === auth.user.id)
+
   return (
     <div>
-      <GroupTitle />
-      <Moment format="YYYY/MM/DD HH:mm">{state.start_at}</Moment> ~ 
-      <Moment format="YYYY/MM/DD HH:mm">{state.end_at}</Moment>
-      @{state.address}
-      <p>{state.description}</p>
-      <p>Limit number: {state.people} people</p>
+      <div className="mb-4">
+        <GroupTitle />
+        <Moment format="YYYY/MM/DD HH:mm">{state.start_at}</Moment> ~ 
+        <Moment format="YYYY/MM/DD HH:mm">{state.end_at}</Moment>
+        @{state.address}
+      </div>
+      <div className="mb-4">
+        <h4>Detail</h4>
+        <p>{state.description}</p>
+      </div>
+      <p className="mb-4">Limit number: {state.people} people</p>
+      {isOrganizer && 
+        <div className="mb-4">
+          <h4>Invitation</h4>
+          <form onSubmit={handleSubmit}>
+            {emails.emails.map((email, idx) => (
+              <div className="mb-2">
+                <input type="text"
+                      value={email.address}
+                      onChange={(e) => handleEmailChange(idx, e)}
+                      className="mr-2"
+                />
+                <FaTrashAlt onClick={(e) => handleRemoveEmail(idx, e)} />
+              </div>
+            ))}
+            <FaPlus onClick={handleAddEmail} />
+            <div className="mt-2">
+              <Button type="submit">Send</Button>
+            </div>
+          </form>
+        </div>
+      }
       <h4>Study Buddies</h4>
-      <UserList />
+      <div className="user-container mb-4">
+        <UserList />
+      </div>
       <JoinButton />
+      <div>
+        <iframe src={state.map_src} width="600" height="450" frameBorder="0" allowFullScreen=""></iframe>
+      </div>
     </div>
   );
 }

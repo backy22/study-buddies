@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios'; 
 import * as Datetime from 'react-datetime';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { API_URL } from "../config";
 
 function CreateGroup() {
@@ -10,6 +10,7 @@ function CreateGroup() {
     title: '',
     description: '',
     address: '',
+    map_src: '',
     start_at: new Date(),
     end_at: new Date(),
     people: 0,
@@ -31,6 +32,10 @@ function CreateGroup() {
     setState({...state, address: e.target.value});
   }
 
+  const onChangeMapSrc = e => {
+    setState({...state, map_src: e.target.value});
+  }
+
   const onChangeStartAt = date => {
     setState({...state, start_at: date._d});
   }
@@ -44,7 +49,7 @@ function CreateGroup() {
   }
 
   const onChangeIsPrivate = e => {
-    setState({...state, is_private: e.target.value});
+    setState({...state, is_private: e.target.checked});
   }
 
   const onSubmit = e => {
@@ -53,6 +58,7 @@ function CreateGroup() {
       title: state.title,
       description: state.description,
       address: state.address,
+      map_src: state.map_src,
       start_at: state.start_at,
       end_at: state.end_at,
       people: state.people,
@@ -102,6 +108,15 @@ function CreateGroup() {
               onChange={onChangeAddress}
               />
         </div>
+        <div className="form-group">
+          <label>Map Source: </label>
+          <input  type="text"
+              required
+              className="form-control"
+              value={state.map_src}
+              onChange={onChangeMapSrc}
+              />
+        </div>
         <div className="form-group"> 
           <label>Description: </label>
           <input  type="text"
@@ -119,6 +134,10 @@ function CreateGroup() {
               value={state.people}
               onChange={onChangePeople}
               />
+        </div>
+        <div className="form-group">
+          <input type="checkbox" name="private" onChange={onChangeIsPrivate}/>
+          <label for="private">Private</label>
         </div>
         <div className="form-group">
           <input type="submit" value="Create Group" className="btn btn-primary" />
