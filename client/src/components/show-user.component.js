@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Image, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { useParams } from "react-router";
-import { Link } from 'react-router-dom';
 import { API_URL } from "../config";
 
 function ShowUser() {

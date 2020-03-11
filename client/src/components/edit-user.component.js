@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useParams } from "react-router";
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { API_URL } from "../config";
 
 function EditUser() {
