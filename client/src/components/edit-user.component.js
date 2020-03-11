@@ -90,7 +90,7 @@ function EditUser() {
     axios.post(API_URL+"/users/update/"+ params.id, user)
       .then(res => console.log(res.data));
 
-    window.location = '/users/api/'+params.id;
+    window.location = '/users/'+params.id;
 
   }
 
