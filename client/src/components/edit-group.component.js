@@ -162,6 +162,10 @@ function EditGroup() {
               />
         </div>
         <div className="form-group">
+          <input type="checkbox" name="private" checked={state.is_private} onChange={onChangeIsPrivate}/>
+          <label for="private" className="ml-2">Private</label>
+        </div>
+        <div className="form-group">
           <input type="submit" value="Edit Group" className="btn btn-commit" />
         </div>
       </form>

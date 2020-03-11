@@ -29,7 +29,7 @@ class Navbar extends Component {
         return (
           <ul className="navbar-nav mr-auto">
             <li className="navbar-item">
-              <Link to="/" className="nav-link">Study Buddies</Link>
+              <Link to="/" className="nav-link">Study Groups</Link>
             </li>
             <li className="navbar-item">
               <Link to="/create" className="nav-link">Create Group</Link>
@@ -41,7 +41,7 @@ class Navbar extends Component {
               <Link to={"/edit/users/"+props.auth.user.id} className="nav-link">Profile</Link>
             </li>
             <li className="navbar-item">
-              <Button variant="link" onClick={this.onLogoutClick}>Logout</Button>
+              <Button variant="logout-link" onClick={this.onLogoutClick}>Logout</Button>
             </li>
           </ul>
         );
@@ -49,7 +49,7 @@ class Navbar extends Component {
         return (
           <ul className="navbar-nav mr-auto">
             <li className="navbar-item">
-              <Link to="/" className="nav-link">Study Buddies</Link>
+              <Link to="/" className="nav-link">Study Groups</Link>
             </li>
             <li className="navbar-item">
               <Link to="/users" className="nav-link">Study Buddies</Link>

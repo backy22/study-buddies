@@ -49,9 +49,21 @@ nav, .content {
 .btn-commit {
   background-color: #f2317f;
   border-color: #f9bcdd;
+  color: #ffffff;
+}
+
+.btn-commit:hover {
+  background-color: #f2317f;
+  border-color: #f9bcdd;
+  color: #ffffff;
 }
 
 .btn-undo {
+  background-color: #6b778d;
+  border-color: #6b778d;
+}
+
+.btn-undo:hover {
   background-color: #6b778d;
   border-color: #6b778d;
 }
@@ -63,6 +75,10 @@ nav, .content {
 /* nav */
 .logo img{
   width: 200px;
+}
+
+.btn-logout-link {
+  color: #6b778d;
 }
 
 /* show group */

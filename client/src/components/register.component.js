@@ -47,7 +47,6 @@ function Register(props) {
       password2: state.password2
     }
 
-  console.log(user)
   axios.post(API_URL+"/users/register", user)
     .then(res => props.history.push("/login"))
     .catch(err => console.log(err))

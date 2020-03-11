@@ -223,7 +223,7 @@ function ShowGroup() {
             ))}
             <FaPlus onClick={handleAddEmail} />
             <div className="mt-2">
-              <Button type="submit">Send</Button>
+              <Button type="submit" className="btn-commit">Send</Button>
             </div>
           </form>
         </div>

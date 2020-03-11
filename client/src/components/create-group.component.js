@@ -69,8 +69,6 @@ function CreateGroup() {
     axios.post(API_URL+"/groups/add", group)
       .then(res => console.log(res.data));
 
-    window.location = '/';
-
   }
 
   return (
@@ -136,8 +134,8 @@ function CreateGroup() {
               />
         </div>
         <div className="form-group">
-          <input type="checkbox" name="private" onChange={onChangeIsPrivate}/>
-          <label for="private">Private</label>
+          <input type="checkbox" name="private" checked={state.is_private} onChange={onChangeIsPrivate}/>
+          <label for="private" className="ml-2">Private</label>
         </div>
         <div className="form-group">
           <input type="submit" value="Create Group" className="btn btn-commit" />
