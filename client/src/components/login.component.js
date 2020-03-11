@@ -81,7 +81,7 @@ class Login extends Component {
                           })}
                           />
           </Form.Group>
-          <label htmlFor="email">Email</label>
+          <p>Sample user: mary@gmail.com</p>
           <span className="red-text">
             {errors.email}
             {errors.emailnotfound}
@@ -94,9 +94,7 @@ class Login extends Component {
                           onChange={this.onChangePassword}
                           placeholder="Password" />
           </Form.Group>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
-          </Form.Group>
+          <p>Sample user: password</p>
           <Button className="btn-commit" type="submit">
             Login
           </Button>

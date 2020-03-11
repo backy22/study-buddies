@@ -93,8 +93,7 @@ function EditGroup() {
     axios.post(API_URL+"/groups/update/" + params.id, group)
       .then(res => console.log(res.data));
 
-    window.location = '/';
-
+    window.location = '/show/'+params.id;
   }
 
     return (

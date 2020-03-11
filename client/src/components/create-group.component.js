@@ -69,6 +69,7 @@ function CreateGroup() {
     axios.post(API_URL+"/groups/add", group)
       .then(res => console.log(res.data));
 
+    window.location = '/';
   }
 
   return (
