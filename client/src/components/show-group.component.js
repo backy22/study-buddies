@@ -186,7 +186,7 @@ function ShowGroup() {
 
   const JoinButton = () => {
     if (Object.keys(auth.user).length > 0 && !isOrganizer){
-      return <Button className="mb-2" onClick={(e) => handleClick('join', e)}>Join</Button>
+      return <Button className="mb-2 btn-commit" onClick={(e) => handleClick('join', e)}>Join</Button>
     }else{
       return null;
     }

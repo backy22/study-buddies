@@ -23,7 +23,7 @@ function EditUser() {
   let params = useParams();
 
   useEffect(() => {
-    axios.get(API_URL+"/users/"+auth.user.id)
+    axios.get(API_URL+"/users/api/"+auth.user.id)
       .then(response => {
         setState({
           name: response.data.name,
@@ -90,7 +90,7 @@ function EditUser() {
     axios.post(API_URL+"/users/update/"+ params.id, user)
       .then(res => console.log(res.data));
 
-    window.location = '/users/'+params.id;
+    window.location = '/users/api/'+params.id;
 
   }
 
