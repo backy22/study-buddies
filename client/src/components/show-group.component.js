@@ -234,7 +234,7 @@ function ShowGroup() {
       </div>
       <JoinButton />
       <div>
-        <iframe src={state.map_src} width="600" height="450" frameBorder="0" allowFullScreen=""></iframe>
+        <iframe src={state.map_src} width="100%" height="450" frameBorder="0" allowFullScreen=""></iframe>
       </div>
     </div>
   );

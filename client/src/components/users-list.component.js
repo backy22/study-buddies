@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Image } from 'react-bootstrap';
+import { Image, Table } from 'react-bootstrap';
 import axios from 'axios';
 import { API_URL } from "../config";
 
@@ -41,7 +41,7 @@ function UsersList() {
   return (
     <div className="content">
       <h3>Study Buddies</h3>
-      <table className="table">
+      <Table responsive>
         <thead className="thead">
           <tr>
             <th>Username</th>
@@ -53,7 +53,7 @@ function UsersList() {
         <tbody>
           <UserList />
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }

@@ -7,7 +7,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 
-import Navbar from "./components/navbar.component"
+import Header from "./components/header.component"
 
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;
@@ -24,7 +24,7 @@ if (localStorage.jwtToken) {
 function App() {
   return (
     <Provider store={store}>
-      <Navbar />
+      <Header />
     </Provider>
   );
 }
