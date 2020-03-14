@@ -62,7 +62,6 @@ function GroupsList() {
   }
 
   const GroupList = () => {
-    console.log(state.groups)
     return state.groups.map(currentgroup => {
       return <Group group={currentgroup} deleteGroup={deleteGroup} key={currentgroup._id} user={auth.user}/>;
     })
