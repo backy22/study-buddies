@@ -26,8 +26,8 @@ const usersRouter = require('./routes/users');
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
-app.use('/groups', groupsRouter);
-app.use('/users', usersRouter);
+app.use('/api/groups', groupsRouter);
+app.use('/api/users', usersRouter);
 
 app.post('/send-email', function(req,res){
   let transporter = nodeMailer.createTransport({

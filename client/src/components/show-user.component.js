@@ -19,7 +19,7 @@ function ShowUser() {
   let params = useParams();
 
   useEffect(() => {
-    axios.get(API_URL+"/users/api/" + params.id)
+    axios.get(API_URL+"/users/" + params.id)
       .then(response => {
         setState({
           name: response.data.name,
